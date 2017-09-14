@@ -17,11 +17,14 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     Myadaptor myadaptor;
+
     ArrayList<PageWrapper> countries = new ArrayList<>();
     MyAsynctask ma;
+    Random random=new Random();
     ViewPager viewpager;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -34,13 +37,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         viewpager= (ViewPager) findViewById(R.id.viewpager);
-
-       // viewpager.setAdapter(myadaptor);
         ma= new MyAsynctask();
          ma.execute();
-
-
-       // ma.execute();
 
     }
 
@@ -74,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
             fictionCountry.county = "fictioncountry" + "  " + i;
             fictionCountry.capital = "fictionCApital" + "   " + i;
             fictionCountry.imageId = R.drawable.imagesengland;
+
+          //  fictionCountry.spinnerposition=3;
             SystemClock.sleep(1);
         }
 
@@ -103,12 +103,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String aVoid) {
             lnprogressbar.setVisibility(View.GONE);
-
             viewpager.setAdapter(myadaptor);
-
-
-
-
         }
     }
 }

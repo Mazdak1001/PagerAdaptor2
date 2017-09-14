@@ -20,8 +20,8 @@ public class PreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pre);
         onclickListener();
-
     }
+
     private void onclickListener() {
         ButtonGo=(Button)findViewById(R.id.ButtonGo);
         final Context context=this;
@@ -30,8 +30,6 @@ public class PreActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(context, MainActivity.class);
                 startActivity(intent);
-
-
             }
         });
     }

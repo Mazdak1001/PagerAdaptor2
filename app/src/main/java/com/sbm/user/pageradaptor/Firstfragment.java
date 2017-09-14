@@ -9,8 +9,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 
@@ -29,8 +33,12 @@ public class Firstfragment extends Fragment {
     private String Country;
     private String City;
     private int flag;
-
-
+    Button submit;
+    View view;
+    Spinner emotionspinner;
+String [] mood={"Select","Good","bad","ugly"};
+    PageWrapper intpagewraper;
+EditText editText;
 
     public Firstfragment() {
         // Required empty public constructor
@@ -62,26 +70,81 @@ public class Firstfragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_firstfragment, container, false);
+          view= inflater.inflate(R.layout.fragment_firstfragment, container, false);
         TextView City1=(TextView)view.findViewById(R.id.City);
         TextView country=(TextView)view.findViewById(R.id.Country);
         City1.setText(City);
         country.setText(Country);
         ImageView imageview=(ImageView)view.findViewById(R.id.flag);
         imageview.setImageResource(flag);
-        Button submit=(Button)view.findViewById(R.id.buttonsubmit);
+        initialize();
+        clicklistener();
+        spinneronclicklistener();
+        spinner();
 
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),SubmitActivity.class);
-                startActivity(intent);
-
-            }
-        });
         return view;
 
     }
+   private  void clicklistener(){
 
+       submit.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent=new Intent(getActivity(),SubmitActivity.class);
+               startActivity(intent);
+
+           }
+       });
+   }
+    private void spinner(){
+
+
+        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getContext(),R.layout.support_simple_spinner_dropdown_item,mood);
+        arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        emotionspinner.setAdapter(arrayAdapter);
+        intpagewraper =new PageWrapper();
+        emotionspinner.setSelection(intpagewraper.spinnerposition);
+
+    }
+    private void spinneronclicklistener() {
+
+      emotionspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+          @Override
+          public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+              switch (position)
+              {
+                  case 0:
+                      submit.setEnabled(false);
+                      break;
+                  case 1:
+                      onitemclick(1);
+                      break;
+                  case 2:
+                      onitemclick(2);
+                      break;
+                  case 3:
+                      onitemclick(3);
+                      break;
+              }
+          }
+
+          @Override
+          public void onNothingSelected(AdapterView<?> parent) {
+
+
+          }
+      });
+
+    }
+private  void initialize(){
+    emotionspinner=(Spinner)view.findViewById(R.id.mood);
+    submit=(Button)view.findViewById(R.id.buttonsubmit);
+    editText=(EditText)view.findViewById(R.id.displayedittext);
+}
+    private void onitemclick(int counter) {
+        submit.setEnabled(true);
+        editText.setText(mood[counter]);
+    }
 
 }
