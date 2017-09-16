@@ -19,8 +19,6 @@ import java.util.ArrayList;
         public Myadaptor(FragmentManager fm, ArrayList<PageWrapper> countries) {
             super(fm);
             this.countries = countries;
-
-
         }
 
         @Override
